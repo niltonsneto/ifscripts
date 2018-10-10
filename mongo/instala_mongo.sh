@@ -1,8 +1,7 @@
 #!/bin/bash
 ########## Install mongo ###########
-## Ok funcionando ultima atualização 08/10/2018
-sudo apt update
-sudo apt install -y curl
+## Ok funcionando ultima atualização 10/10/2018
+sudo apt install -y curl  
 sudo apt install -y libcurl3
 sudo apt install -y libcurl4
 ##Create the list file /etc/apt/sources.list.d/mongodb-org-4.0.list
@@ -13,9 +12,8 @@ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongod
 #### Fim repositório #####
 sudo apt update
 sudo apt install -y mongodb-org
-
-##### Configura serviço para subir mongo no boot
-
+sudo apt clean
+##### Criando serviço de inicialização Mongo #####
 sudo echo "[Unit]" > /etc/systemd/system/mongodb.service
 sudo echo "Description=High-performance, schema-free document-oriented database" >> /etc/systemd/system/mongodb.service
 sudo echo "After=network.target" >> /etc/systemd/system/mongodb.service
@@ -26,54 +24,22 @@ sudo echo "ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf" >> /etc/
 sudo echo "" >> /etc/systemd/system/mongodb.service
 sudo echo "[Install]" >> /etc/systemd/system/mongodb.service
 sudo echo "WantedBy=multi-user.target" >> /etc/systemd/system/mongodb.service
-exit
 sudo systemctl start mongodb
 sudo systemctl enable mongodb
+sudo systemctl stop mongodb
+##### Fim serviço de inicialização Mongo #####
 
-#Agora entrar no mongo, usando a linha de comando, e execute os comandos para criar os usuarios para a autenticação:
-mongo
-use ifc
-j = { name : "mongo" }
-k = { x : 3 }
-db.alunos.insert( j )
-db.alunos.insert( k )
-db.alunos.find()
-db.alunos.find().pretty()
-db.createUser(
-   {
-     user: "aluno",
-     pwd: "aluno",
-     roles: [ "readWrite", "dbAdmin" ]
-   }
-)
-use admin
-db.createUser(
-   {
-     user: "root",
-     pwd: "root",
-     roles: [ "root" , "userAdminAnyDatabase", "dbAdminAnyDatabase" , "readWriteAnyDatabase", "readAnyDatabase"]
-   }
-)
-
-exit
-
-#De agora em diante usaremos ( mongo --port 27017 -u aluno -p aluno --authenticationDatabase ifc ) para quando formos acessar como aluno a base de dados ifc, e quando formos acessar qualquer base de dados usaremos ( mongo --port 27017 -u root -p root --authenticationDatabase admin ):
-#Agora vamos voltar a usar o mongo só que agora como root, usando o comando a seguir:
-mongo --port 27017 -u root -p root --authenticationDatabase admin
+##### Configuração do mongod.conf ######
+sudo rm /var/lib/mongodb
+sudo rm /etc/mongod.conf
+sudo mkdir /var/lib/mongodb
+sudo chown -R mongodb:mongodb /var/lib/mongodb
+sudo cp /home/suporte/mongo/mongod_funfando /etc/mongod.conf
+sudo systemctl start mongodb
+##### Fim configuração do mongod.conf ######
 
 
-#Agora que temos o usuario root, vamos setar o mongo com antentificação. Agora em security.authorization: disabled, subistitua por enabled;
-
-sudo sed -i "85 s/disabled/enabled/" /etc/mongod.conf
 
 
-#Agora vamos reiniciar o servidor mongo, usando o comando:
-sudo systemctl restart mongodb
 
 
-#Agora vamos iniciar o mongo, usando o comando:
-mongo --port 27017 -u root -p root --authenticationDatabase admin
-
-
-cd /home/aluno/public_html/
-sudo composer require "mongodb/mongodb=^1.0.0"
