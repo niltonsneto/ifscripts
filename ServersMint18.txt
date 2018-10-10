@@ -1,0 +1,651 @@
+﻿﻿#Atualizar o maquina
+#sudo apt list --upgradable
+sudo rm -vf /var/lib/apt/lists/*
+sudo apt update
+sudo apt remove -y
+sudo apt upgrade  -y
+sudo apt dist-upgrade -y
+sudo apt autoremove -y
+sudo apt-get -f install -y
+sudo apt-get clean all -y
+sudo dpkg --configure -a
+#sudo updatedb
+
+#em caso de erro:
+#sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "numero not found do update"
+
+
+sudo rm -vf /var/lib/apt/lists/*
+sudo rm -rf /etc/apt/sources.list.d/mongodb-org*
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 58712A2291FA4AD5
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 58712A2291FA4AD5
+sudo apt-get update
+sudo apt-get install -y mongodb-org
+
+
+sudo su
+sudo echo "[Unit]" > /etc/systemd/system/mongodb.service
+sudo echo "Description=High-performance, schema-free document-oriented database" >> /etc/systemd/system/mongodb.service
+sudo echo "After=network.target" >> /etc/systemd/system/mongodb.service
+sudo echo "" >> /etc/systemd/system/mongodb.service
+sudo echo "[Service]" >> /etc/systemd/system/mongodb.service
+sudo echo "User=mongodb" >> /etc/systemd/system/mongodb.service
+sudo echo "ExecStart=/usr/bin/mongod --quiet --config /etc/mongod.conf" >> /etc/systemd/system/mongodb.service
+sudo echo "" >> /etc/systemd/system/mongodb.service
+sudo echo "[Install]" >> /etc/systemd/system/mongodb.service
+sudo echo "WantedBy=multi-user.target" >> /etc/systemd/system/mongodb.service
+exit
+
+
+#""" Fim """#
+
+sudo systemctl start mongodb
+
+
+sudo systemctl enable mongodb
+
+
+sudo apt install -y snmp bum lynx htop apache2 php7.0 php7.0-common php7.0-gd php7.0-json php7.0-odbc php7.0-readline php7.0-sybase php7.0-zip php7.0-bcmath php7.0-curl php7.0-gmp php7.0-ldap php7.0-opcache php7.0-recode php7.0-tidy php7.0-bz2 php7.0-dev php7.0-imap php7.0-mbstring php7.0-pgsql php7.0-snmp php7.0-xml php7.0-cgi php7.0-enchant php7.0-interbase php7.0-mcrypt php7.0-phpdbg php7.0-soap php7.0-xmlrpc php7.0-cli php7.0-fpm php7.0-intl php7.0-mysql php7.0-pspell php7.0-sqlite3 php7.0-xsl postgresql-9.5 postgresql-9.5-postgis-2.2
+
+sudo apt install -y php-dev libapache2-mod-php libapache2-mod-php7.0 libapache2-mod-python libapache2-mod-auth-pgsql libcurl4-doc libcurl4-openssl-dev php-mongodb php-raphf php-raphf-dev php-pecl-http php-pecl-http-dev php-http php-http-request php-http-request2 php-http-webdav-server php-propro php-propro-dev php-pear geany gedit gedit-plugins geany-plugins composer mysql-client-5.7 mysql-server-5.7 libmysqlclient-dev npm snmp bum lynx
+
+#se tiver interface instalar pgadmin3
+#sudo apt install -y pgadmin3
+
+****Postgresql*****
+
+
+sudo -u postgres psql
+\password
+
+#setar o password em root
+
+
+CREATE ROLE aluno PASSWORD 'aluno' SUPERUSER CREATEDB CREATEROLE INHERIT LOGIN;
+\q
+ 
+#descomentar e mudar para  
+
+sudo sed -i "59 s/#listen_addresses/listen_addresses/" /etc/postgresql/9.5/main/postgresql.conf
+sudo sed -i "63 s/5432/5434/" /etc/postgresql/9.5/main/postgresql.conf
+
+sudo apt install -y postgresql postgresql-server-dev-all postgresql-contrib-9.5 postgresql-contrib
+
+sudo systemctl restart postgresql
+sudo systemctl restart postgresql@9.5-main
+
+sudo su - postgres
+createdb gistestdb
+psql gistestdb
+CREATE EXTENSION postgis;
+CREATE EXTENSION postgis_topology;
+CREATE EXTENSION fuzzystrmatch;
+CREATE EXTENSION postgis_tiger_geocoder;
+SELECT na.address, na.streetname, na.streettypeabbrev, na.zip FROM normalize_address('1 South St, Philadelphia, PA 19130') as na;
+\q
+exit
+
+********************
+
+
+sudo pear install pear
+
+sudo sed -i "$ s|\-n||g" /usr/bin/pecl
+sudo apt install pkg-config
+
+sudo pecl install mongodb raphf pecl_http propro
+
+
+#****instalar pecl****#
+
+sudo su
+sudo echo "extension=raphf.so" >> /etc/php/7.0/apache2/php.ini
+sudo echo "extension=propro.so" >> /etc/php/7.0/apache2/php.ini
+sudo echo "extension=http.so" >> /etc/php/7.0/apache2/php.ini
+sudo echo "extension=mongodb.so" >> /etc/php/7.0/apache2/php.ini
+exit
+
+#*********************#
+
+#Atualizar o maquina
+#sudo apt list --upgradable
+sudo rm -vf /var/lib/apt/lists/*
+sudo apt update
+sudo apt remove -y
+sudo apt upgrade  -y
+sudo apt dist-upgrade -y
+sudo apt autoremove -y
+sudo apt-get -f install -y
+sudo apt-get clean all -y
+sudo dpkg --configure -a
+#sudo updatedb
+
+
+#****Arrumar mods****#
+
+FAZER DAQUI P/ BAIXO
+sudo su
+sudo echo "<IfModule mod_dir.c>" > /etc/apache2/mods-enabled/dir.conf
+sudo echo "    DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm" >> /etc/apache2/mods-enabled/dir.conf
+sudo echo "</IfModule>" >> /etc/apache2/mods-enabled/dir.conf
+exit
+
+#*********************#
+
+sudo apt install -y php-mbstring php7.0-mbstring php-gettext apache2 mysql-server-5.7 mysql-client php7.0-mysql php7.0-curl php7.0-json php7.0-cgi php7.0 libapache2-mod-php7.0 phpmyadmin
+
+#(answer the questions appropriately)(Reponda com calma e atenção)#
+
+sudo mysql_secure_installation
+
+###################################################################
+
+sudo phpenmod mcrypt
+sudo phpenmod mbstring
+sudo systemctl restart mysql
+sudo systemctl restart apache2
+sudo service mysql restart
+sudo service apache2 restart
+
+ 
+ 
+****Configuração Apache******
+
+mkdir /home/aluno/public_html
+sudo chmod a+x /home/aluno/public_html
+sudo chown -R www-data:www-data /home/aluno/public_html
+sudo chmod -R 775 /home/aluno/public_html
+sudo adduser $USER www-data
+sudo adduser aluno www-data
+sudo a2enmod userdir
+sudo systemctl restart apache2
+
+
+sudo sed -i "21 c \#<IfModule mod_userdir.c>" /etc/apache2/mods-available/php7.0.conf
+sudo sed -i "22 c \#    <Directory /home/*/public_html>" /etc/apache2/mods-available/php7.0.conf
+sudo sed -i "23 c \#        php_admin_flag engine Off" /etc/apache2/mods-available/php7.0.conf
+sudo sed -i "24 c \#    </Directory>" /etc/apache2/mods-available/php7.0.conf
+sudo sed -i "25 c \#</IfModule>" /etc/apache2/mods-available/php7.0.conf
+
+sudo sed -i "12 c \        DocumentRoot /home/aluno/public_html/" /etc/apache2/sites-available/000-default.conf
+
+
+
+sudo sed -i "158 a \<Directory /home/aluno/public_html/>" /etc/apache2/apache2.conf
+sudo sed -i "159 a \        Options Indexes FollowSymLinks" /etc/apache2/apache2.conf
+sudo sed -i "160 a \        AllowOverride None" /etc/apache2/apache2.conf
+sudo sed -i "161 a \        Require all granted" /etc/apache2/apache2.conf
+sudo sed -i "162 a \</Directory>" /etc/apache2/apache2.conf
+sudo sed -i "163 a \ " /etc/apache2/apache2.conf
+
+sudo a2enmod rewrite
+sudo systemctl restart apache2
+ 
+sudo su
+sudo echo "Include /etc/phpmyadmin/apache.conf" >> /etc/apache2/apache2.conf
+sudo echo "ServerName localhost" >> /etc/apache2/apache2.conf
+exit 
+ 
+sudo systemctl restart apache2
+sudo service apache2 restart
+
+
+#fazer o teste se o mongo está rodando:
+mongo
+
+
+
+sudo su
+sudo echo "# mongod.conf" > /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "# for documentation of all options, see:" >> /etc/mongod.conf
+sudo echo "#   http://docs.mongodb.org/manual/reference/configuration-options/" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "# where to write logging data." >> /etc/mongod.conf
+sudo echo "systemLog:" >> /etc/mongod.conf
+sudo echo "   verbosity: 5" >> /etc/mongod.conf
+sudo echo "   quiet: false" >> /etc/mongod.conf
+sudo echo "   traceAllExceptions: true" >> /etc/mongod.conf
+sudo echo "   syslogFacility: user" >> /etc/mongod.conf
+sudo echo "   path: /var/log/mongodb/mongod.log" >> /etc/mongod.conf
+sudo echo "   logAppend: false" >> /etc/mongod.conf
+sudo echo "   logRotate: rename" >> /etc/mongod.conf
+sudo echo "   destination: file" >> /etc/mongod.conf
+sudo echo "   timeStampFormat: iso8601-local" >> /etc/mongod.conf
+sudo echo "   component:" >> /etc/mongod.conf
+sudo echo "       accessControl:" >> /etc/mongod.conf
+sudo echo "           verbosity: 5" >> /etc/mongod.conf
+sudo echo "       command:" >> /etc/mongod.conf
+sudo echo "           verbosity: 5" >> /etc/mongod.conf
+sudo echo "       control:" >> /etc/mongod.conf
+sudo echo "           verbosity: 5" >> /etc/mongod.conf
+sudo echo "       geo:" >> /etc/mongod.conf
+sudo echo "           verbosity: 5" >> /etc/mongod.conf
+sudo echo "       index:" >> /etc/mongod.conf
+sudo echo "           verbosity: 5" >> /etc/mongod.conf
+sudo echo "       network:" >> /etc/mongod.conf
+sudo echo "           verbosity: 5" >> /etc/mongod.conf
+sudo echo "       query:" >> /etc/mongod.conf
+sudo echo "           verbosity: 5" >> /etc/mongod.conf
+sudo echo "       replication:" >> /etc/mongod.conf
+sudo echo "           verbosity: 5" >> /etc/mongod.conf
+sudo echo "       sharding:" >> /etc/mongod.conf
+sudo echo "           verbosity: 5" >> /etc/mongod.conf
+sudo echo "       storage:" >> /etc/mongod.conf
+sudo echo "           verbosity: 5" >> /etc/mongod.conf
+sudo echo "           journal:" >> /etc/mongod.conf
+sudo echo "               verbosity: 5" >> /etc/mongod.conf
+sudo echo "       write:" >> /etc/mongod.conf
+sudo echo "           verbosity: 5" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "processManagement:" >> /etc/mongod.conf
+sudo echo "   fork: false" >> /etc/mongod.conf
+sudo echo "   pidFilePath: /var/lib/mongodb/mongod.pid" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "# network interfaces" >> /etc/mongod.conf
+sudo echo "net:" >> /etc/mongod.conf
+sudo echo "   port: 27017" >> /etc/mongod.conf
+sudo echo "   bindIp: 127.0.0.1" >> /etc/mongod.conf
+sudo echo "   maxIncomingConnections: 65536" >> /etc/mongod.conf
+sudo echo "   wireObjectCheck: true" >> /etc/mongod.conf
+sudo echo "   ipv6: false" >> /etc/mongod.conf
+sudo echo "   unixDomainSocket:" >> /etc/mongod.conf
+sudo echo "       enabled: true" >> /etc/mongod.conf
+sudo echo "       pathPrefix: /tmp" >> /etc/mongod.conf
+sudo echo "       filePermissions: 0700" >> /etc/mongod.conf
+sudo echo "   http:" >> /etc/mongod.conf
+sudo echo "       enabled: false" >> /etc/mongod.conf
+sudo echo "       JSONPEnabled: false" >> /etc/mongod.conf
+sudo echo "       RESTInterfaceEnabled: false" >> /etc/mongod.conf
+sudo echo "   #~ ssl:" >> /etc/mongod.conf
+sudo echo "       #~ #sslOnNormalPorts: false # não existe desde 2.6" >> /etc/mongod.conf
+sudo echo "       #~ mode: allowSSL" >> /etc/mongod.conf
+sudo echo "       #~ PEMKeyFile: /var/lib/mongodb/SSL/mongod.pem" >> /etc/mongod.conf
+sudo echo "       #~ PEMKeyPassword: root" >> /etc/mongod.conf
+sudo echo "       #~ clusterFile: /var/lib/mongodb/SSL/cluster.pem" >> /etc/mongod.conf
+sudo echo "       #~ clusterPassword: root" >> /etc/mongod.conf
+sudo echo "       #~ CAFile: /var/lib/mongodb/SSL/root.pem" >> /etc/mongod.conf
+sudo echo "       #~ CRLFile: /var/lib/mongodb/SSL/certification.pem" >> /etc/mongod.conf
+sudo echo "       #~ allowConnectionsWithoutCertificates: true" >> /etc/mongod.conf
+sudo echo "       #~ allowInvalidCertificates: true" >> /etc/mongod.conf
+sudo echo "       #~ allowInvalidHostnames: true" >> /etc/mongod.conf
+sudo echo "       #~ disabledProtocols: TLS1_0,TLS1_1" >> /etc/mongod.conf
+sudo echo "       #~ FIPSMode: false" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "security:" >> /etc/mongod.conf
+sudo echo "   #~ keyFile: /var/lib/mongodb/key" >> /etc/mongod.conf
+sudo echo "   #~ clusterAuthMode: sendKeyFile" >> /etc/mongod.conf
+sudo echo "   authorization: disabled" >> /etc/mongod.conf
+sudo echo "   javascriptEnabled: true" >> /etc/mongod.conf
+sudo echo "   #~ sasl:" >> /etc/mongod.conf
+sudo echo "       #~ hostName: mongodroot" >> /etc/mongod.conf
+sudo echo "       #~ serviceName: mongodb" >> /etc/mongod.conf
+sudo echo "       #~ saslauthdSocketPath: /var/lib/mongodb/" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "# Where and how to store data." >> /etc/mongod.conf
+sudo echo "storage:" >> /etc/mongod.conf
+sudo echo "   dbPath: /var/lib/mongodb/" >> /etc/mongod.conf
+sudo echo "   indexBuildRetry: true" >> /etc/mongod.conf
+sudo echo "   repairPath: /var/lib/mongodb/repair/" >> /etc/mongod.conf
+sudo echo "   journal:" >> /etc/mongod.conf
+sudo echo "       enabled: true" >> /etc/mongod.conf
+sudo echo "       commitIntervalMs: 30" >> /etc/mongod.conf
+sudo echo "   directoryPerDB: true" >> /etc/mongod.conf
+sudo echo "   syncPeriodSecs: 60" >> /etc/mongod.conf
+sudo echo "   engine: mmapv1" >> /etc/mongod.conf
+sudo echo "   mmapv1:" >> /etc/mongod.conf
+sudo echo "       preallocDataFiles: true" >> /etc/mongod.conf
+sudo echo "       nsSize: 16" >> /etc/mongod.conf
+sudo echo "       quota:" >> /etc/mongod.conf
+sudo echo "           enforced: false" >> /etc/mongod.conf
+sudo echo "           maxFilesPerDB: 8" >> /etc/mongod.conf
+sudo echo "       smallFiles: false" >> /etc/mongod.conf
+sudo echo "       journal:" >> /etc/mongod.conf
+sudo echo "           debugFlags: 0" >> /etc/mongod.conf
+sudo echo "   wiredTiger:" >> /etc/mongod.conf
+sudo echo "       engineConfig:" >> /etc/mongod.conf
+sudo echo "           cacheSizeGB: 1" >> /etc/mongod.conf
+sudo echo "           statisticsLogDelaySecs: 60" >> /etc/mongod.conf
+sudo echo "           journalCompressor: snappy" >> /etc/mongod.conf
+sudo echo "           directoryForIndexes: true" >> /etc/mongod.conf
+sudo echo "       collectionConfig:" >> /etc/mongod.conf
+sudo echo "           blockCompressor: snappy" >> /etc/mongod.conf
+sudo echo "       indexConfig:" >> /etc/mongod.conf
+sudo echo "           prefixCompression: true" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "operationProfiling:" >> /etc/mongod.conf
+sudo echo "   slowOpThresholdMs: 100" >> /etc/mongod.conf
+sudo echo "   mode: all" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "#~ replication:" >> /etc/mongod.conf
+sudo echo "   #~ oplogSizeMB: 3000" >> /etc/mongod.conf
+sudo echo "   #~ replSetName: mongo" >> /etc/mongod.conf
+sudo echo "   #~ secondaryIndexPrefetch: all" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "sharding:" >> /etc/mongod.conf
+sudo echo "   clusterRole: shardsvr" >> /etc/mongod.conf
+sudo echo "   archiveMovedChunks: true" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "## Enterprise-Only Options:" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "#auditLog:" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+sudo echo "#snmp:" >> /etc/mongod.conf
+sudo echo "" >> /etc/mongod.conf
+exit
+
+
+
+************Construção ( Reconstrução ) das pastas com reinicialização do PC**************
+
+
+#Agora iremos criar a pasta do mongo, usando o comando:
+sudo mkdir /var/lib/mongodb/
+sudo mkdir /var/lib/mongodb-wiredtiger/
+sudo mkdir /var/log/mongodb/
+sudo mkdir /var/log/mongodb-wiredtiger/
+#Agora deletar tudo dentro da pasta do mongo, usando o comando:
+sudo rm -rf /var/lib/mongodb/*
+sudo rm -rf /var/lib/mongodb-wiredtiger/*
+#Agora iremos criar a pasta onde o reparo será feito, usando o comando:
+sudo mkdir /var/lib/mongodb/repair/
+sudo mkdir /var/lib/mongodb-wiredtiger/repair/
+#Agora iremos criar a pasta onde os arquivos de SSL serão armazenados, usando o comando:
+sudo mkdir /var/lib/mongodb/SSL/
+sudo mkdir /var/lib/mongodb-wiredtiger/SSL/
+#Agora deletar tudo dentro da pasta de log do mongo, usando o comando:
+sudo rm -rf /var/log/mongodb/*
+sudo rm -rf /var/log/mongodb-wiredtiger/*
+#Agora vamos setar como dono do mongo o mongodb, usando o comando:
+sudo chown -R mongodb:mongodb /var/lib/mongodb/
+sudo chown -R mongodb:mongodb /var/lib/mongodb-wiredtiger/
+#Agora vamos setar como dono do log do mongo o mongodb, usando o comando:
+sudo chown -R mongodb:mongodb /var/log/mongodb/
+sudo chown -R mongodb:mongodb /var/log/mongodb-wiredtiger/
+#Agora vamos setar tudo com permisão de leitura e escrita para o mongo, usando o comando:
+sudo chmod 700 /var/lib/mongodb/
+sudo chmod 700 /var/lib/mongodb-wiredtiger/
+#Agora vamos setar tudo com permisão de leitura e escrita para o log do mongo, usando o comando:
+sudo chmod 700 /var/log/mongodb/
+sudo chmod 700 /var/log/mongodb-wiredtiger/
+#Agora reinicie a maquina, usando o comando:
+#sudo reboot now
+sudo systemctl restart mongodb
+
+# Esperar maquina!
+# Esperar maquina!
+# Esperar maquina!
+# Esperar maquina!
+# Esperar maquina!
+# Esperar maquina!
+# Esperar maquina!
+****************************************************************************************************
+
+
+#fazer o teste se o mongo está rodando:
+mongo
+#Caso não funcione faça o teste se o mongo está rodando novamente:
+mongo
+
+#Execute o comando a seguir para atualizar o mongo para wiredtiger:
+sudo mongod --storageEngine wiredTiger --dbpath /var/lib/mongodb-wiredtiger/ --repairpath /var/lib/mongodb-wiredtiger/repair/
+#Agora Reconstrua as pastas:
+
+************Construção ( Reconstrução ) das pastas com reinicialização do PC**************
+
+
+#Agora iremos criar a pasta do mongo, usando o comando:
+sudo mkdir /var/lib/mongodb/
+sudo mkdir /var/lib/mongodb-wiredtiger/
+sudo mkdir /var/log/mongodb/
+sudo mkdir /var/log/mongodb-wiredtiger/
+#Agora deletar tudo dentro da pasta do mongo, usando o comando:
+sudo rm -rf /var/lib/mongodb/*
+sudo rm -rf /var/lib/mongodb-wiredtiger/*
+#Agora iremos criar a pasta onde o reparo será feito, usando o comando:
+sudo mkdir /var/lib/mongodb/repair/
+sudo mkdir /var/lib/mongodb-wiredtiger/repair/
+#Agora iremos criar a pasta onde os arquivos de SSL serão armazenados, usando o comando:
+sudo mkdir /var/lib/mongodb/SSL/
+sudo mkdir /var/lib/mongodb-wiredtiger/SSL/
+#Agora deletar tudo dentro da pasta de log do mongo, usando o comando:
+sudo rm -rf /var/log/mongodb/*
+sudo rm -rf /var/log/mongodb-wiredtiger/*
+#Agora vamos setar como dono do mongo o mongodb, usando o comando:
+sudo chown -R mongodb:mongodb /var/lib/mongodb/
+sudo chown -R mongodb:mongodb /var/lib/mongodb-wiredtiger/
+#Agora vamos setar como dono do log do mongo o mongodb, usando o comando:
+sudo chown -R mongodb:mongodb /var/log/mongodb/
+sudo chown -R mongodb:mongodb /var/log/mongodb-wiredtiger/
+#Agora vamos setar tudo com permisão de leitura e escrita para o mongo, usando o comando:
+sudo chmod 700 /var/lib/mongodb/
+sudo chmod 700 /var/lib/mongodb-wiredtiger/
+#Agora vamos setar tudo com permisão de leitura e escrita para o log do mongo, usando o comando:
+sudo chmod 700 /var/log/mongodb/
+sudo chmod 700 /var/log/mongodb-wiredtiger/
+#Agora reinicie a maquina, usando o comando:
+#sudo reboot now
+sudo systemctl restart mongodb
+
+# Esperar maquina!
+# Esperar maquina!
+# Esperar maquina!
+# Esperar maquina!
+# Esperar maquina!
+# Esperar maquina!
+# Esperar maquina!
+****************************************************************************************************
+
+#fazer o teste se o mongo está rodando:
+mongo
+#Caso não funcione faça o teste se o mongo está rodando novamente:
+mongo
+
+#Agora substituir tudo que está escrito /mongodb/ por /mongodb-wiredtiger/ e ir em engine: e trocar de mmapv1 para wiredTiger !
+
+sudo sed -i "s/\/mongodb\//\/mongodb-wiredtiger\//g" /etc/mongod.conf
+sudo sed -i "102 s/mmapv1/wiredTiger/" /etc/mongod.conf
+
+
+
+
+#Agora reiniciar o serviço do mongo, usando o comando:
+sudo systemctl restart mongodb
+
+
+#Iniciar o mongo, com o comando:
+mongo
+
+#Agora substituir tudo que está escrito /mongodb-wiredtiger/ por /mongodb/ e ir em engine: e trocar de wiredTiger para mmapv1 !
+
+sudo sed -i "s/\/mongodb-wiredtiger\//\/mongodb\//g" /etc/mongod.conf
+sudo sed -i "102 s/wiredTiger/mmapv1/" /etc/mongod.conf
+
+#Agora reiniciar o serviço do mongo, usando o comando:
+sudo systemctl restart mongodb
+
+
+#Iniciar o mongo, com o comando:
+mongo
+
+
+#Agora entrar no mongo, usando a linha de comando, e execute os comandos para criar os usuarios para a autenticação:
+mongo
+use ifc
+j = { name : "mongo" }
+k = { x : 3 }
+db.alunos.insert( j )
+db.alunos.insert( k )
+db.alunos.find()
+db.alunos.find().pretty()
+db.createUser(
+   {
+     user: "aluno",
+     pwd: "aluno",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+)
+use admin
+db.createUser(
+   {
+     user: "root",
+     pwd: "root",
+     roles: [ "root" , "userAdminAnyDatabase", "dbAdminAnyDatabase" , "readWriteAnyDatabase", "readAnyDatabase"]
+   }
+)
+
+
+exit
+
+
+#fazer o teste se o mongo está rodando:
+mongo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Agora substituir tudo que está escrito /mongodb/ por /mongodb-wiredtiger/ e ir em engine: e trocar de mmapv1 para wiredTiger !
+
+sudo sed -i "s/\/mongodb\//\/mongodb-wiredtiger\//g" /etc/mongod.conf
+sudo sed -i "102 s/mmapv1/wiredTiger/" /etc/mongod.conf
+
+#Agora reiniciar o serviço do mongo, usando o comando:
+sudo systemctl restart mongodb
+
+
+#Iniciar o mongo, com o comando:
+mongo
+
+
+#Agora entrar no mongo, usando a linha de comando, e execute os comandos para criar os usuarios para a autenticação:
+mongo
+use ifc
+j = { name : "mongo" }
+k = { x : 3 }
+db.alunos.insert( j )
+db.alunos.insert( k )
+db.alunos.find()
+db.alunos.find().pretty()
+db.createUser(
+   {
+     user: "aluno",
+     pwd: "aluno",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+)
+use admin
+db.createUser(
+   {
+     user: "root",
+     pwd: "root",
+     roles: [ "root" , "userAdminAnyDatabase", "dbAdminAnyDatabase" , "readWriteAnyDatabase", "readAnyDatabase"]
+   }
+)
+
+
+exit
+
+
+#De agora em diante usaremos ( mongo --port 27017 -u aluno -p aluno --authenticationDatabase ifc ) para quando formos acessar como aluno a base de dados ifc, e quando formos acessar qualquer base de dados usaremos ( mongo --port 27017 -u root -p root --authenticationDatabase admin ):
+#Agora vamos voltar a usar o mongo só que agora como root, usando o comando a seguir:
+mongo --port 27017 -u root -p root --authenticationDatabase admin
+
+
+#Agora que temos o usuario root, vamos setar o mongo com antentificação. Agora em security.authorization: disabled, subistitua por enabled;
+
+sudo sed -i "85 s/disabled/enabled/" /etc/mongod.conf
+
+
+#Agora vamos reiniciar o servidor mongo, usando o comando:
+sudo systemctl restart mongodb
+
+
+#Agora vamos iniciar o mongo, usando o comando:
+mongo --port 27017 -u root -p root --authenticationDatabase admin
+
+
+cd /home/aluno/public_html/
+sudo composer require "mongodb/mongodb=^1.0.0"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Caso de algum erro, descomentar os sudo e executalos:
+#Agora iremos destravar o mongo, usando o comando:
+#sudo rm -rf /var/lib/mongodb/mongod.lock
+#sudo rm -rf /var/lib/mongodb-wiredtiger/mongod.lock
+
