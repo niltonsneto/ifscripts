@@ -1,0 +1,32 @@
+#Agora entrar no mongo, usando a linha de comando, e execute os comandos para criar os usuarios para a autenticação:
+mongo
+use ifc
+j = { name : "mongo" }
+k = { x : 3 }
+db.alunos.insert( j )
+db.alunos.insert( k )
+db.alunos.find()
+db.alunos.find().pretty()
+db.createUser(
+   {
+     user: "aluno",
+     pwd: "aluno",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+)
+use admin
+db.createUser(
+   {
+     user: "root",
+     pwd: "root",
+     roles: [ "root" , "userAdminAnyDatabase", "dbAdminAnyDatabase" , "readWriteAnyDatabase", "readAnyDatabase"]
+   }
+)
+
+exit
+
+#Agora vamos iniciar o mongo, usando o comando:
+mongo --port 27017 -u root -p root --authenticationDatabase admin
+
+cd /home/aluno/public_html/
+sudo composer require "mongodb/mongodb=^1.0.0"
