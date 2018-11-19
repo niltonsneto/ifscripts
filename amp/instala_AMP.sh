@@ -19,6 +19,22 @@ sudo echo "extension=mongodb.so" >> /etc/php/7.2/apache2/php.ini
 ##FLUSH PRIVILEGES;
 ##exit
 #### Inicio instala postgreSQL
-sudo apt install -y postgresql-10 postgresql-10-postgis-2.4
-
-
+sudo apt install -y postgresql-10 postgresql-10-postgis-2.4 postgresql postgresql-server-dev-all postgresql-contrib-10 postgresql-contrib pgadmin3
+#### Fim instala postgreSQL
+#### Inicio config postgreSQL
+sudo -u postgres psql
+\password
+#setar o password em root
+CREATE ROLE aluno PASSWORD 'aluno' SUPERUSER CREATEDB CREATEROLE INHERIT LOGIN;
+\q
+sudo su - postgres
+createdb gistestdb
+psql gistestdb
+CREATE EXTENSION postgis;
+CREATE EXTENSION postgis_topology;
+CREATE EXTENSION fuzzystrmatch;
+CREATE EXTENSION postgis_tiger_geocoder;
+SELECT na.address, na.streetname, na.streettypeabbrev, na.zip FROM normalize_address('1 South St, Philadelphia, PA 19130') as na;
+\q
+exit
+#### Fim config postgreSQL
