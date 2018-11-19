@@ -18,6 +18,7 @@ sudo echo "extension=mongodb.so" >> /etc/php/7.2/apache2/php.ini
 ##GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' WITH GRANT OPTION;
 ##FLUSH PRIVILEGES;
 ##exit
-
+#### Inicio instala postgreSQL
+sudo apt install -y postgresql-10 postgresql-10-postgis-2.4
 
 
