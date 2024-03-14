@@ -237,5 +237,5 @@ instala_python() {
 #instala_vbox
 #instala_androidStudio
 #instala_redes
-instala_grubCustomizer
-instala_viaSnap
+#instala_grubCustomizer
+#instala_viaSnap
