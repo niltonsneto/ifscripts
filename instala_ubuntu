@@ -239,3 +239,4 @@ instala_python() {
 #instala_redes
 #instala_grubCustomizer
 #instala_viaSnap
+instala_python
