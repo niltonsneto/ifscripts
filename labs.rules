@@ -2,7 +2,7 @@
 -w /var/log/secure -p wa -k auth_log
 
 # Monitorar uso do comando 'su'
--a always,exit -F arch=b64 -S execve -F exe=/usr/bin/su -k su_usage
+-a always,exit -F arch=b64 -S execve -F exe=/usr/bin/su -k su_tentativas
 
 # Monitorar acesso via SSH
--a always,exit -F arch=b64 -S execve -F exe=/usr/sbin/sshd -k ssh_access
+-a always,exit -F arch=b64 -S execve -F exe=/usr/sbin/sshd -k ssh_acesso
