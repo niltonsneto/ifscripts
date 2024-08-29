@@ -1,0 +1,10 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eno1:
+      dhcp4: yes
+      dhcp6: false
+      addresses:
+        - 172.16.5.3/16:
+            label: "eno1:lab-b5"
