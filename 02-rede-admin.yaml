@@ -6,5 +6,5 @@ network:
       dhcp4: yes
       dhcp6: false
       addresses:
-        - 172.16.5.3/16:
+        - 172.16.x.y/16:
             label: "eno1:lab-b5"
