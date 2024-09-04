@@ -4,10 +4,10 @@
 ARQUIVO_IPS="ips.txt"
 
 # Caminho para a chave pública
-CHAVE_PUBLICA="~/.ssh/id_rsa.pub"
+CHAVE_PUBLICA="/home/suporte/.ssh/id_rsa.pub"
 
 # Usuário SSH
-USUARIO="usuario"
+USUARIO="suporte"
 
 # Ler cada IP do arquivo e copiar a chave pública
 while IFS= read -r IP; do
