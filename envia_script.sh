@@ -2,9 +2,9 @@
 
 # Arquivo que contém a lista de IPs
 ARQUIVO_IPS="ips.txt"
-ARQUIVO=""
+NOME_ARQUIVO=""
 # Arquivo a ser enviado
-ARQUIVO="/home/suporte/arquivo"
+ARQUIVO="/home/suporte/$NOME_ARQUIVO"
 
 # Diretório de destino
 DESTINO="/home/suporte/"
