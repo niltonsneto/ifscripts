@@ -2,7 +2,7 @@
 
 # Arquivo que contém a lista de IPs
 ARQUIVO_IPS="ips.txt"
-
+ARQUIVO=""
 # Arquivo a ser enviado
 ARQUIVO="/home/suporte/arquivo"
 
