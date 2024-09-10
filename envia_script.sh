@@ -15,13 +15,18 @@ fi
 
 # Verifica se o arquivo existe
 if [ ! -e "$FILE_NAME" ]; then
-    dialog --backtitle "$BACKTITLE" --title "Erro!!" --sleep 3 --infobox "O arquivo '$FILE_NAME' não existe." 10 50
+    dialog --backtitle "$BACKTITLE" --title "Erro!!" --sleep 3 --infobox "O arquivo '$FILE_NAME' não encontrado." 10 50
     clear
     exit 1
 fi
 # Arquivo que contém a lista de IPs
  ARQUIVO_IPS="ips.txt"
  clear
+ if [ ! -e $ARQUIVO_IPS ]; then
+    dialog --backtitle "$BACKTITLE" --title "Erro!!" --sleep 3 --infobox "O arquivo '$FILE_NAME' não encontrado." 10 50
+    clear
+    exit 1
+fi
 # Arquivo a ser enviado
  ARQUIVO="/home/suporte/$FILE_NAME"
 # Diretório de destino
