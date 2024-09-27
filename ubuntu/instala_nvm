@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Função para mostrar mensagens
+function show_message() {
+    dialog --msgbox "$1" 6 50
+}
+
+# Função para verificar a conexão com a internet
+function check_internet() {
+    ping -c 1 google.com &> /dev/null
+    return $?
+}
+
+# Função para obter a versão mais recente do NVM
+function get_latest_nvm_version() {
+    curl -s https://api.github.com/repos/nvm-sh/nvm/releases/latest | grep 'tag_name' | cut -d '"' -f 4
+}
+
+# Função para instalar o NVM
+function install_nvm() {
+    local nvm_version=$(get_latest_nvm_version)
+    
+    # Baixa e instala o NVM
+    curl -o- "https://raw.githubusercontent.com/nvm-sh/nvm/$nvm_version/install.sh" | bash
+
+    # Adiciona ao .bashrc do usuário
+    echo "export NVM_DIR=\"\$HOME/.nvm\"" >> ~/.bashrc
+    echo "[ -s \"\$NVM_DIR/nvm.sh\" ] && \. \"\$NVM_DIR/nvm.sh\"" >> ~/.bashrc
+
+    # Atualiza o shell
+    source ~/.bashrc
+
+    # Instala a versão mais recente do Node.js
+    nvm install node
+}
+
+# Verifica se o dialog está instalado
+if ! command -v dialog &> /dev/null; then
+    show_message "O pacote 'dialog' não está instalado. Instalando..."
+    sudo apt-get install -y dialog
+fi
+
+# Loop para verificar a conexão
+while ! check_internet; do
+    show_message "Conexão com a internet não detectada. Conecte-se e pressione 'OK' para tentar novamente."
+done
+
+# Inicia o processo
+dialog --title "Instalação do NVM" --msgbox "Iniciando a instalação do NVM..." 6 50
+
+# Instala o NVM
+install_nvm
+
+# Finaliza
+show_message "NVM e Node.js foram instalados com sucesso!"
