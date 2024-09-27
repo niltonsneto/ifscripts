@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Verifica se o NVM já foi instalado
+if [ -f "$HOME/.nvm_installed" ]; then
+    exit 0
+fi
+
+
 # Função para mostrar mensagens
 function show_message() {
     dialog --msgbox "$1" 6 50
@@ -50,6 +56,10 @@ dialog --title "Instalação do NVM" --msgbox "Iniciando a instalação do NVM..
 
 # Instala o NVM
 install_nvm
+
+# Cria um arquivo de marcador
+touch "$HOME/.nvm_installed"
+
 
 # Finaliza
 show_message "NVM e Node.js foram instalados com sucesso!"
